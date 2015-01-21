@@ -5,7 +5,7 @@ ENV DEBIANCHEFSOLO_UPDATED_AT 20150120
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update
-RUN apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby1.9.1-dev ca-certificates sudo net-tools vim
+RUN apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby-dev ca-certificates sudo net-tools vim
 RUN apt-get -y dist-upgrade
 
 RUN echo "Installing Chef This may take a few minutes..."
