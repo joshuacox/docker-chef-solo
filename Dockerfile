@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:wheezy
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DEBIANCHEFSOLO_UPDATED_AT 20150204
