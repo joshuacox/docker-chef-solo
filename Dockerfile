@@ -1,4 +1,4 @@
-FROM ubuntu:precise
+FROM ubuntu:trusty
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV DEBIANCHEFSOLO_UPDATED_AT 20150322
