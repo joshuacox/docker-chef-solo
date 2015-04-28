@@ -4,6 +4,7 @@ MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 ENV DOCKER_CHEF_SOLO_UPDATED 20150428
 ENV DEBIAN_FRONTEND noninteractive
 
+#run again
 RUN apt-get -y update
 RUN apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim
 RUN apt-get -y dist-upgrade
