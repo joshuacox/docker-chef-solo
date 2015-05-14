@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
-ENV DOCKER_CHEF_SOLO_UPDATED 20150509
+ENV DOCKER_CHEF_SOLO_UPDATED 20150514
 ENV DEBIAN_FRONTEND noninteractive
 
 #run again
