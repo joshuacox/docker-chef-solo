@@ -16,10 +16,12 @@ RUN echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen
 RUN locale-gen
 ENV LANG en_US.UTF-8
 
+# ChefDK
+RUN cd /tmp; wget https://opscode-omnibus-packages.s3.amazonaws.com/debian/6/x86_64/chefdk_0.6.0-1_amd64.deb; dpkg -i chefdk*.deb
 RUN echo "Installing Chef This may take a few minutes..."
 RUN curl -L https://www.getchef.com/chef/install.sh | sudo bash
 RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-RUN /opt/chef/embedded/bin/gem install berkshelf
+RUN /opt/chefdk/embedded/bin/gem install berkshelf
 RUN echo "Installing mysql now as the cookbook is failing This may take a few minutes..."
 
 # Example usage
