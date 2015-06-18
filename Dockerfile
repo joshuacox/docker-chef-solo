@@ -1,7 +1,7 @@
 FROM debian:wheezy
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
-ENV DOCKER_CHEF_SOLO_UPDATED 20150611
+ENV DOCKER_CHEF_SOLO_UPDATED 20150618
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update
