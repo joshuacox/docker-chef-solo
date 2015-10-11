@@ -1,7 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
-ENV DOCKER_CHEF_SOLO_UPDATED 20151004
+ENV DOCKER_CHEF_SOLO_UPDATED 20151011
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update
