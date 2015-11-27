@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Docker-chef-solo by joshuacox</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Docker-chef-solo</h1>
+        <h2>Basic Docker Image with Chef-Solo installed</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/joshuacox/docker-chef-solo/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/joshuacox/docker-chef-solo/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/joshuacox/docker-chef-solo" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="docker-chef-solo" class="anchor" href="#docker-chef-solo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Docker Chef solo</h1>
+
+<p>Basic Docker Image with Chef-Solo installed</p>
+
+<p>warning under development there be dragons here</p>
+
+<h2>
+<a id="example-usage" class="anchor" href="#example-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example usage</h2>
+
+<p>Make a docker file that starts with a FROM statements like this:</p>
+
+<pre><code>FROM joshuacox/docker-chef-solo:wheezy
+</code></pre>
+
+<p>The important parts you need to customize are the chef specific files especially roles, </p>
+
+<p>You’ll then need to include the chef stuff in your Dockerfile, here is an example of what you need to put in your dockerfile to make use of this base container</p>
+
+<pre><code>COPY ./Berksfile /Berksfile
+COPY ./chef/roles /var/chef/roles
+COPY ./chef/solo.rb /var/chef/solo.rb
+COPY ./chef/solo.json /var/chef/solo.json
+</code></pre>
+
+<p>Then you’ll need to tell Docker to execute chef solo to execute your above additions</p>
+
+<pre><code>RUN cd / &amp;&amp; /opt/chef/embedded/bin/berks vendor /var/chef/cookbooks
+RUN chef-solo -c /var/chef/solo.rb -j /var/chef/solo.json
+</code></pre>
+
+<p>then you’ll need to start your app using supervisor or S6 or similar here is an example of a typical supervisord starting apache:</p>
+
+<pre><code>RUN easy_install supervisor
+RUN echo "foo...."
+COPY ./start.sh /start.sh
+COPY ./foreground.sh /etc/apache2/foreground.sh
+COPY ./supervisord.conf /etc/supervisord.conf
+
+RUN chmod 755 /start.sh /etc/apache2/foreground.sh
+EXPOSE 80
+CMD ["/bin/bash", "/start.sh"]
+</code></pre>
+
+<p>You will find examples of all the above files in this directory</p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-69335315-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
