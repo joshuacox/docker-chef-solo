@@ -7,31 +7,39 @@ warning under development there be dragons here
 
 ## Example usage
 
-Make a docker file that looks something like this:
-https://github.com/joshuacox/ddd/blob/master/Dockerfile
+Make a docker file that starts with a FROM statements like this:
 
-The important parts you need to customize are the chef specific files especially roles, in the example above you can see how I applied the roles that were used from the VDD project 
-https://www.drupal.org/project/vdd
-
-I’ll copy the commented lines from the Dockerfile here as an example of what you need to uncomment and put in your dockerfile to make use of this base container
 ```
-#RUN echo "Installing berksfile..."
-#ADD ./Berksfile /Berksfile
-#ADD ./chef/roles /var/chef/roles
-#ADD ./chef/solo.rb /var/chef/solo.rb
-#ADD ./chef/solo.json /var/chef/solo.json
-
-#RUN echo "Installing berks This may take a few minutes..."
-#RUN cd / && /opt/chef/embedded/bin/berks vendor /var/chef/cookbooks
-#RUN chef-solo -c /var/chef/solo.rb -j /var/chef/solo.json
-
-#RUN easy_install supervisor
-#RUN echo "foo...."
-#ADD ./start.sh /start.sh
-#ADD ./foreground.sh /etc/apache2/foreground.sh
-#ADD ./supervisord.conf /etc/supervisord.conf
-
-#RUN chmod 755 /start.sh /etc/apache2/foreground.sh
-#EXPOSE 80
-#CMD ["/bin/bash", "/start.sh"]
+FROM joshuacox/docker-chef-solo:wheezy
 ```
+
+The important parts you need to customize are the chef specific files especially roles, 
+
+You’ll then need to include the chef stuff in your Dockerfile, here is an example of what you need to put in your dockerfile to make use of this base container
+```
+COPY ./Berksfile /Berksfile
+COPY ./chef/roles /var/chef/roles
+COPY ./chef/solo.rb /var/chef/solo.rb
+COPY ./chef/solo.json /var/chef/solo.json
+```
+
+Then you’ll need to tell Docker to execute chef solo to execute your above additions
+```
+RUN cd / && /opt/chef/embedded/bin/berks vendor /var/chef/cookbooks
+RUN chef-solo -c /var/chef/solo.rb -j /var/chef/solo.json
+```
+
+then you’ll need to start your app using supervisor or S6 or similar here is an example of a typical supervisord starting apache:
+```
+RUN easy_install supervisor
+RUN echo "foo...."
+COPY ./start.sh /start.sh
+COPY ./foreground.sh /etc/apache2/foreground.sh
+COPY ./supervisord.conf /etc/supervisord.conf
+
+RUN chmod 755 /start.sh /etc/apache2/foreground.sh
+EXPOSE 80
+CMD ["/bin/bash", "/start.sh"]
+```
+
+You will find examples of all the above files in this directory
