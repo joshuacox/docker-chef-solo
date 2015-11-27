@@ -1,4 +1,4 @@
-docker-chef-solo
+Docker Chef solo
 ================
 
 Basic Docker Image with Chef-Solo installed
