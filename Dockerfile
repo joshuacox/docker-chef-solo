@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
   && echo "Installing Chef This may take a few minutes..." \
   && curl -L https://www.getchef.com/chef/install.sh | sudo bash \
   && echo "gem: --no-ri --no-rdoc" > ~/.gemrc \
-  &&  /opt/chef/embedded/bin/gem install berkshelf \
+  && /opt/chef/embedded/bin/gem install berkshelf \
   && apt-get -yqq autoremove \
   && apt-get clean \
   && rm -Rf /var/lib/apt/lists/*
