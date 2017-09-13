@@ -1,7 +1,7 @@
 FROM debian:stretch
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
-ENV BUILD_PACKAGES='locales python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim' \
+ENV BUILD_PACKAGES='locales software-properties-common curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim' \
   LANG=en_US.UTF-8 \
   DOCKER_CHEF_SOLO_UPDATED=20170913
 
