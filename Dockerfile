@@ -3,7 +3,7 @@ MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV BUILD_PACKAGES='locales python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim' \
   LANG=en_US.UTF-8 \
-  DOCKER_CHEF_SOLO_UPDATED=20170826
+  DOCKER_CHEF_SOLO_UPDATED=20170913
 
 RUN DEBIAN_FRONTEND=noninteractive \
   && apt-get -qq update && apt-get -qqy dist-upgrade \
