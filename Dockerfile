@@ -14,17 +14,16 @@ RUN DEBIAN_FRONTEND=noninteractive \
   && echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen \
   && locale-gen \
   && echo '%sudo ALL=(ALL) NOPASSWD:ALL'>> /etc/sudoers \
-  && apt-get -y autoremove \
+  && echo "Installing Chef This may take a few minutes..." \
+  && curl -L https://www.getchef.com/chef/install.sh | sudo bash \
+  && echo "gem: --no-ri --no-rdoc" > ~/.gemrc \
+  &&  /opt/chef/embedded/bin/gem install berkshelf \
+  && apt-get -yqq autoremove \
   && apt-get clean \
   && rm -Rf /var/lib/apt/lists/*
 
 
-
-RUN echo "Installing Chef This may take a few minutes..."
-RUN curl -L https://www.getchef.com/chef/install.sh | sudo bash
-RUN echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-RUN /opt/chef/embedded/bin/gem install berkshelf
-RUN echo "Installing mysql now as the cookbook is failing This may take a few minutes..."
+# RUN echo "Installing mysql now as the cookbook is failing This may take a few minutes..."
 
 # Example usage
 #RUN echo "Installing berksfile..."
