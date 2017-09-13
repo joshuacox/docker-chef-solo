@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM debian:stretch
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
 ENV BUILD_PACKAGES='locales software-properties-common curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim' \
