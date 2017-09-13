@@ -1,20 +1,24 @@
-FROM debian:wheezy
+FROM debian:stretch
 MAINTAINER Josh Cox <josh 'at' webhosting.coop>
 
-ENV DOCKER_CHEF_SOLO_UPDATED 20151126
-ENV DEBIAN_FRONTEND noninteractive
+ENV BUILD_PACKAGES='locales python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim' \
+  LANG=en_US.UTF-8 \
+  DOCKER_CHEF_SOLO_UPDATED=20170826
 
-RUN apt-get -y update
-RUN apt-get -y install python-software-properties curl build-essential libxml2-dev libxslt-dev git ruby ruby-dev ca-certificates sudo net-tools vim
-RUN apt-get -y dist-upgrade
+RUN DEBIAN_FRONTEND=noninteractive \
+  && apt-get -qq update && apt-get -qqy dist-upgrade \
+  && apt-get -qqy --no-install-recommends install \
+     $BUILD_PACKAGES \
+  && echo 'en_US.ISO-8859-15 ISO-8859-15'>>/etc/locale.gen \
+  && echo 'en_US ISO-8859-1'>>/etc/locale.gen \
+  && echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen \
+  && locale-gen \
+  && echo '%sudo ALL=(ALL) NOPASSWD:ALL'>> /etc/sudoers \
+  && apt-get -y autoremove \
+  && apt-get clean \
+  && rm -Rf /var/lib/apt/lists/*
 
-# This block became necessary with the new chef 12
-RUN apt-get -y install locales
-# RUN echo 'en_US.ISO-8859-15 ISO-8859-15'>>/etc/locale.gen
-# RUN echo 'en_US ISO-8859-1'>>/etc/locale.gen
-RUN echo 'en_US.UTF-8 UTF-8'>>/etc/locale.gen
-RUN locale-gen
-ENV LANG en_US.UTF-8
+
 
 RUN echo "Installing Chef This may take a few minutes..."
 RUN curl -L https://www.getchef.com/chef/install.sh | sudo bash
